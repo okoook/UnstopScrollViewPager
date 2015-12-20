@@ -186,9 +186,6 @@ public class AutoScrollViewPager extends ViewPager {
                         || (int) Math.abs(mLastMotionY - mInitialMotionY) > touchSlop) {
                     mInitialMotionX = mLastMotionX;
                     mInitialMotionY = mLastMotionY;
-                    Log.d("AutoScrollViewPager: ", "ACTION_MOVE--" + touchSlop);
-                } else {
-                    startAutoScroll();
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -221,6 +218,12 @@ public class AutoScrollViewPager extends ViewPager {
                             onPageClickListener.onPageClick(this, getCurrentItem());
                         }
                     }
+                }
+                break;
+            // ADD -- when ACTION_MOVE ended, resume scrolling,  
+            case MotionEvent.ACTION_CANCEL:
+                if (autoScroll) {
+                    startAutoScroll();
                 }
                 break;
         }
